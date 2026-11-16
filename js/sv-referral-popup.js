@@ -17,7 +17,10 @@
      data-delay-mobile="3000"    ms after load, narrower screens
      data-snooze-days="14"       days hidden after a close or a click
      data-chatbot-open=""        CSS selector that matches only while the
-                                 chatbot's card is open; empty = no check
+                                 chatbot is open; empty = no check. On
+                                 silkvision.net the chatbot is a Typeform
+                                 popover, which adds .tf-v1-popover-wrapper
+                                 while open (measured).
      data-preview="true"         staging only: ignores the memory so the
                                  popup shows on every load
 
@@ -70,6 +73,16 @@
   let hideTimer = 0;
   const isOpen = () => root.classList.contains('is-shown');
 
+  // If the chatbot opens while the popup is up (the Typeform bubble also
+  // opens itself on exit intent), the popup gives way at once.
+  let chatWatch = null;
+  const watchChat = () => {
+    if (!(cfg.chatbotOpen || '').trim() || typeof MutationObserver === 'undefined') return;
+    chatWatch = new MutationObserver(() => { if (chatbotOpen()) close(); });
+    chatWatch.observe(document.body, { childList: true, subtree: true });
+  };
+  const unwatchChat = () => { if (chatWatch) { chatWatch.disconnect(); chatWatch = null; } };
+
   const open = () => {
     clearTimeout(hideTimer);
     lastFocus = document.activeElement;
@@ -78,10 +91,12 @@
     root.classList.add('is-shown');
     card.focus({ preventScroll: true });
     write('sessionStorage', KEY_SEEN, '1');
+    watchChat();
   };
 
   const close = () => {
     if (!isOpen()) return;
+    unwatchChat();
     root.classList.remove('is-shown');
     write('localStorage', KEY_SNOOZE, String(Date.now() + snoozeDays * DAY));
     hideTimer = setTimeout(() => { if (!isOpen()) root.hidden = true; }, CLOSE_MS);

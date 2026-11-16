@@ -47,10 +47,13 @@
   --sv-ease: cubic-bezier(.16, 1, .3, 1);
   --sv-ease-shine: cubic-bezier(.45, 0, .2, 1);
 
-  /* Above the theme's sticky header; the chat widget keeps its own layer. */
+  /* Measured on the live homepage: the Cherry "Pay over time" button sits
+     at 9999 and the Typeform chat bubble at 10001. One above both, so the
+     veil dims them and on phones the bubble cannot cover the card's foot.
+     If the chat opens, the script closes the popup and gives way. */
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 10002;
 }
 .sv-ref[hidden] { display: none; }
 

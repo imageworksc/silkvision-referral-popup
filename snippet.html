@@ -2,17 +2,17 @@
      Silk Vision — homepage referral popup (EVO ICL / STAAR Surgical)
      Paste into a Full HTML block shown on the homepage only. See README.
 
-     1. Fonts: keep the first <link> only if the theme does not already
-        load Poppins (400/600/700) and Inter. It embeds both.
+     1. Fonts: the homepage already loads Poppins (Google Fonts). The first
+        <link> adds Inter, the body text; drop it if the theme adds Inter.
      2. Move the CSS, JS and fonts into the theme (or the CDN) before
         go-live and update the three URLs. Bump ?v= on every change.
      3. Settings live on #sv-ref as data attributes; see the JS header.
      ====================================================================== -->
-<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/fonts.css?v=1">
-<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/sv-referral-popup.css?v=1">
+<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/sv-referral-popup-fonts.css?v=2">
+<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/sv-referral-popup.css?v=2">
 
 <div class="sv-ref html-wrapper" id="sv-ref" hidden
-     data-delay-desktop="1500" data-delay-mobile="3000" data-snooze-days="14" data-chatbot-open="">
+     data-delay-desktop="1500" data-delay-mobile="3000" data-snooze-days="14" data-chatbot-open=".tf-v1-popover-wrapper">
   <div class="sv-ref__veil" data-sv-ref-close></div>
   <div class="sv-ref__frame">
     <div class="sv-ref__card" role="dialog" aria-modal="true" aria-labelledby="sv-ref-title" aria-describedby="sv-ref-text" tabindex="-1">
@@ -36,4 +36,5 @@
   </div>
 </div>
 
-<script src="https://imageworksc.github.io/silkvision-referral-popup/js/sv-referral-popup.js?v=1" defer></script>
+<!-- data-cfasync="false": Cloudflare Rocket Loader leaves it alone. -->
+<script src="https://imageworksc.github.io/silkvision-referral-popup/js/sv-referral-popup.js?v=2" data-cfasync="false" defer></script>
