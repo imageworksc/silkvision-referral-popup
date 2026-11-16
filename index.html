@@ -8,13 +8,13 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="css/fonts.css?v=7">
-<link rel="stylesheet" href="css/tokens.css?v=7">
-<link rel="stylesheet" href="css/base.css?v=7">
-<link rel="stylesheet" href="css/components.css?v=7">
-<link rel="stylesheet" href="css/sections.css?v=7">
-<link rel="stylesheet" href="css/popup.css?v=7">
-<script src="js/main.js?v=7" defer></script>
+<link rel="stylesheet" href="css/fonts.css?v=8">
+<link rel="stylesheet" href="css/tokens.css?v=8">
+<link rel="stylesheet" href="css/base.css?v=8">
+<link rel="stylesheet" href="css/components.css?v=8">
+<link rel="stylesheet" href="css/sections.css?v=8">
+<link rel="stylesheet" href="css/popup.css?v=8">
+<script src="js/main.js?v=8" defer></script>
 </head>
 <body>
 <!-- Stands in for the Drupal field the page is rendered in. See README. -->
@@ -26,10 +26,18 @@
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.8 3.4h3.1l1.5 3.9-2 1.4a12.3 12.3 0 006 6l1.4-2 3.9 1.5v3.1a2 2 0 01-2.2 2A17.6 17.6 0 013.3 5.6a2 2 0 012-2.2z"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z"/></symbol>
   <symbol id="i-replay" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="2.5" y="8" width="14" height="10" rx="2"/><path d="M7.5 5h12a2 2 0 012 2v8"/></symbol>
+  <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8.5 8.5"/></symbol>
 </svg>
 
 <div class="switcher" role="group" aria-label="Mockup controls">
-  <button class="btn btn--ghost" type="button" data-replay aria-label="Replay popup">
+  <div class="switcher__opts" role="group" aria-label="Popup option">
+    <button class="btn btn--ghost" type="button" data-opt="cards" aria-pressed="true" aria-label="Option A: gift cards">
+      <svg class="ico" aria-hidden="true"><use href="#i-cards"/></svg><span class="switcher__label">Cards</span></button>
+    <button class="btn btn--ghost" type="button" data-opt="photo" aria-pressed="false" aria-label="Option B: photo">
+      <svg class="ico" aria-hidden="true"><use href="#i-photo"/></svg><span class="switcher__label">Photo</span></button>
+  </div>
+  <button class="btn btn--ghost switcher__replay" type="button" data-replay aria-label="Replay popup">
     <svg class="ico" aria-hidden="true"><use href="#i-replay"/></svg><span class="switcher__label">Replay popup</span></button>
 </div>
 
@@ -90,6 +98,14 @@
           <svg class="g__bow" viewBox="0 0 30 22"><path d="M13.6 11C10 4 2.5 3.5 2.5 8.5s6.5 4.5 11.1 2.5zm2.8 0C20 4 27.5 3.5 27.5 8.5s-6.5 4.5-11.1 2.5zM13 13l-3.5 7M17 13l3.5 7"/><rect x="12.6" y="9.4" width="4.8" height="4.2" rx="1.2"/></svg></div>
       </div>
     </div>
+    <!-- Option B: the photograph in place of the drawn cards. -->
+    <figure class="pop__photo" aria-hidden="true">
+      <img src="images/gift-handover-960.webp"
+           srcset="images/gift-handover-960.webp 960w, images/gift-handover-1800.webp 1800w"
+           sizes="(min-width: 1920px) 24vw, (min-width: 768px) 460px, calc(100vw - 32px)"
+           width="960" height="480" alt="" decoding="async">
+      <span class="pop__tag"><b>$100</b> for you <span class="pop__tag-sep">·</span> <b>$200</b> for a friend</span>
+    </figure>
     <div class="pop__body">
       <span class="kicker">Refer a friend</span>
       <h2 class="pop__title" id="pop-title">Love Your EVO ICL Vision?</h2>

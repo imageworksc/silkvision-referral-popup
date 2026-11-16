@@ -174,6 +174,52 @@
 .pop__close:hover { opacity: 1; background: rgb(255 255 255 / .12); }
 .pop__close .ico { font-size: 1.6rem; }
 
+/* --------------------------------------------------------------------------
+   Option B — the photograph. One hand passes a gift card to another, in
+   place of the drawn cards. A navy tag on the photo carries the two
+   amounts, so the offer still reads before the copy does. Adobe Stock
+   #311357399, cropped 2:1 on the card.
+   -------------------------------------------------------------------------- */
+.pop__photo { display: none; }
+.pop--photo .pop__art { display: none; }
+.pop--photo .pop__photo {
+  position: relative;
+  display: block;
+  margin: 0;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  background: var(--pale-100);
+}
+.pop__photo img {
+  inline-size: 100%; block-size: 100%;
+  max-width: none;
+  object-fit: cover; object-position: 50% 50%;
+  /* Settles in as the card arrives: a slow, slight pull back. */
+  transform: scale(1.05);
+  transition: transform 1.4s var(--ease) .1s;
+}
+.is-shown .pop__photo img { transform: none; }
+
+.pop__tag {
+  position: absolute; inset-inline-start: var(--s-4); inset-block-end: var(--s-4);
+  display: inline-flex; align-items: baseline; gap: .5em;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--fill-deep);
+  color: var(--on-dark-soft);
+  font-size: var(--t-xs); font-weight: 600; line-height: 1.2;
+  box-shadow: var(--shadow-md);
+}
+.pop__tag b { color: var(--white); font-size: 1.15em; font-weight: 800; }
+.pop__tag-sep { color: var(--cyan-300); }
+
+/* Over a bright photograph the close button needs its own ground. */
+.pop--photo .pop__close {
+  background: rgb(255 255 255 / .92); color: var(--ink-700);
+  opacity: 1; box-shadow: var(--shadow-sm);
+}
+.pop--photo .pop__close:hover { background: var(--white); }
+
 /* Phones: the card sits low, a thumb's reach, with the page visible above. */
 @media (max-width: 47.99rem) {
   .pop { align-items: end; padding: var(--s-4) var(--s-4) calc(env(safe-area-inset-bottom, 0px) + var(--s-6)); }
@@ -197,6 +243,12 @@
   .pop__body { padding: var(--s-4) var(--s-5); }
   .pop__btn { min-block-size: var(--tap); margin-block-start: var(--s-3); }
   .pop__fine { margin-block-start: var(--s-3); padding-block-start: var(--s-2); }
+  /* The photo fills the left column top to bottom, cropped on the card. */
+  .pop--photo .pop__photo { aspect-ratio: auto; }
+  .pop__photo img { object-position: 46% 50%; }
+  /* Narrow column: one amount per line rather than a ragged wrap. */
+  .pop__tag { inset-inline-start: var(--s-3); inset-block-end: var(--s-3); display: grid; grid-template-columns: auto auto; column-gap: .4em; row-gap: .2em; }
+  .pop__tag-sep { display: none; }
 }
 
 /* Reduced motion: a plain fade, the cards already fanned. Last in the file
@@ -207,5 +259,6 @@
   .g--you, .is-shown .g--you { transform: rotate(-7deg); }
   .g--friend, .is-shown .g--friend { transform: rotate(3deg); }
   .is-shown .g--friend::after { animation: none; }
+  .pop__photo img, .is-shown .pop__photo img { transform: none; transition: none; }
   .pop .btn:hover, .pop .btn:hover .ico--arrow { transform: none; }
 }

@@ -82,10 +82,17 @@
   background: var(--white); border: 1px solid var(--hairline); border-radius: var(--r-md);
   box-shadow: var(--shadow-md);
 }
+.switcher { display: flex; align-items: center; gap: var(--s-2); }
 .switcher .btn { min-block-size: var(--tap); padding-inline: var(--s-4); }
-/* Phones: icon only, so it clears the logo. */
+/* The two options as one segmented control; the chosen one filled. */
+.switcher__opts { display: flex; padding: .3rem; gap: .3rem; border-radius: var(--r-md); background: var(--pale-100); }
+.switcher__opts .btn { border-color: transparent; }
+.switcher__opts .btn[aria-pressed="true"] { background: var(--fill-deep); color: var(--white); }
+.switcher__opts .btn:hover { transform: none; }
+/* Phones: icons only, and no replay — choosing an option replays it — so
+   the control clears the logo. */
 @media (max-width: 47.99rem) {
   .switcher { inset-block-start: var(--s-2); inset-inline-end: var(--s-2); padding: var(--s-1); }
   .switcher .btn { padding-inline: 0; inline-size: var(--tap); }
-  .switcher__label { display: none; }
+  .switcher__label, .switcher__replay { display: none; }
 }
