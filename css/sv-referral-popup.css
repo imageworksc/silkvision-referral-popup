@@ -1,0 +1,320 @@
+/* ==========================================================================
+   Silk Vision — homepage referral popup (EVO ICL, STAAR Surgical)
+   ==========================================================================
+   The design from the original mockup: a navy card, the two gift cards
+   fanning into place, the title and line centred, one plum button.
+
+   Built to drop into the silkvision.net Drupal theme without patches:
+   - Every size reads off one unit, --sv-u: 1rem, which is 10px under the
+     theme (html { font-size: 62.5% }). Past 1920px wide it follows the
+     screen, so 4K and 5K at 1x see the 1920 popup, larger and sharper,
+     the same rule the entropion page uses — but scoped to the popup, so
+     the site's own root size is never changed.
+   - Every class is prefixed .sv-ref, and every token is scoped to .sv-ref,
+     so nothing here reaches the theme and :root is never touched.
+   - Rules are written at two classes (.sv-ref .sv-ref__x), so they outrank
+     the theme's element rules (h2, p, a, button) without !important.
+   - No gradients, no inline styles.
+   ========================================================================== */
+
+.sv-ref {
+  /* ---- The unit every size is written in -------------------------------- */
+  --sv-u: 1rem;
+
+  /* ---- Tokens, from the Silk Vision system (same values as entropion) ---- */
+  --sv-ink-700: #013559;
+  --sv-ink-600: #00497b;
+  --sv-blue-500: #005894;
+  --sv-cyan-400: #35a7e0;
+  --sv-pale-200: #ccdeea;
+  --sv-fill-blue: #e8f2fb;
+  --sv-plum-600: #6a006a;
+  --sv-plum-500: #800080;
+  --sv-white: #ffffff;
+  --sv-on-dark-soft: rgb(255 255 255 / .8);
+  --sv-on-dark-faint: rgb(255 255 255 / .6);
+  --sv-shade: 0 19 37;
+
+  --sv-font-head: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --sv-font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --sv-s-2: calc(.8 * var(--sv-u));  --sv-s-3: calc(1.2 * var(--sv-u));  --sv-s-4: calc(1.6 * var(--sv-u));
+  --sv-s-5: calc(2.4 * var(--sv-u)); --sv-s-6: calc(3.2 * var(--sv-u));
+  --sv-r-sm: calc(.6 * var(--sv-u)); --sv-r-md: calc(1 * var(--sv-u)); --sv-r-lg: calc(1.4 * var(--sv-u));
+  /* Never under a fingertip; grows with the popup on 4K/5K screens. */
+  --sv-tap: max(44px, calc(4.4 * var(--sv-u)));
+
+  --sv-ease: cubic-bezier(.16, 1, .3, 1);
+  --sv-ease-shine: cubic-bezier(.45, 0, .2, 1);
+
+  /* Above the theme's sticky header; the chat widget keeps its own layer. */
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+.sv-ref[hidden] { display: none; }
+
+/* Large screens: past 1920px the unit follows the viewport (1920 → 10px,
+   3840 → 20px, 5120 → 26.7px). max() keeps a reader's larger default. */
+@media (min-width: 120em) {
+  .sv-ref { --sv-u: max(1rem, 100vw / 192); }
+}
+
+/* ---- Reset: whatever the theme does to these elements, undone here ---- */
+.sv-ref :where(div, h2, p, a, button, b, i, small, span, svg) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+  text-align: inherit;
+  color: inherit;
+  max-width: none;
+}
+
+/* Themes often decorate headings and links with pseudo-elements. */
+.sv-ref .sv-ref__title::before, .sv-ref .sv-ref__title::after,
+.sv-ref .sv-ref__btn::before, .sv-ref .sv-ref__btn::after { content: none; }
+
+/* ---- Veil and frame ---------------------------------------------------- */
+.sv-ref .sv-ref__veil {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--sv-shade) / .2);
+  opacity: 0;
+  transition: opacity .6s var(--sv-ease);
+}
+.sv-ref .sv-ref__frame {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--sv-s-5);
+  pointer-events: none;
+}
+
+/* ---- The card ---------------------------------------------------------- */
+.sv-ref .sv-ref__card {
+  position: relative;
+  /* Wide enough that the supporting line holds to two lines. */
+  inline-size: min(calc(48 * var(--sv-u)), 100%);
+  max-block-size: calc(100vh - 2 * var(--sv-s-5));
+  max-block-size: calc(100dvh - 2 * var(--sv-s-5));
+  overflow: auto;
+  border-radius: var(--sv-r-lg);
+  background: var(--sv-ink-700);
+  color: var(--sv-white);
+  font-family: var(--sv-font-body);
+  font-size: calc(1.6 * var(--sv-u));
+  line-height: 1.6;
+  text-align: center;
+  box-shadow: 0 calc(2 * var(--sv-u)) calc(4 * var(--sv-u)) rgb(var(--sv-shade) / .22);
+  opacity: 0;
+  transform: translateY(calc(.8 * var(--sv-u)));
+  transition: opacity .6s var(--sv-ease), transform .9s var(--sv-ease);
+  pointer-events: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.sv-ref .sv-ref__card:focus { outline: none; }
+.sv-ref.is-shown .sv-ref__veil { opacity: 1; }
+.sv-ref.is-shown .sv-ref__card { opacity: 1; transform: none; }
+
+/* ---- Art: the two gift cards, fanning into place ----------------------- */
+.sv-ref .sv-ref__art {
+  display: grid;
+  place-items: center;
+  block-size: calc(11.2 * var(--sv-u));
+  margin-block-start: var(--sv-s-5);
+}
+.sv-ref .sv-ref__pair { position: relative; inline-size: calc(16.8 * var(--sv-u)); block-size: calc(9.6 * var(--sv-u)); }
+.sv-ref .sv-ref__gift {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1.586;
+  padding: calc(.88 * var(--sv-u)) calc(1.12 * var(--sv-u));
+  border-radius: calc(.72 * var(--sv-u));
+  font-family: var(--sv-font-head);
+  text-align: start;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translateY(calc(.8 * var(--sv-u)));
+  transition: transform 1.1s var(--sv-ease) .2s;
+}
+.sv-ref .sv-ref__gift b { font-size: calc(2.4 * var(--sv-u)); font-weight: 700; line-height: .9; letter-spacing: -.02em; }
+.sv-ref .sv-ref__gift small { font-size: .45em; vertical-align: .9em; margin-inline-end: .04em; }
+.sv-ref .sv-ref__gift i { font-style: normal; font-weight: 600; font-size: calc(1.2 * var(--sv-u)); line-height: 1.2; }
+
+.sv-ref .sv-ref__gift--you {
+  inline-size: 58%;
+  inset-block-start: 6%;
+  inset-inline-start: 0;
+  background: var(--sv-ink-600);
+  color: var(--sv-white);
+  border: 1px solid rgb(255 255 255 / .16);
+}
+.sv-ref .sv-ref__gift--you i { color: var(--sv-pale-200); }
+.sv-ref .sv-ref__gift--friend {
+  inline-size: 66%;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  background: var(--sv-fill-blue);
+  color: var(--sv-ink-700);
+  box-shadow: 0 calc(.96 * var(--sv-u)) calc(2 * var(--sv-u)) rgb(var(--sv-shade) / .3);
+}
+.sv-ref .sv-ref__gift--friend i { color: var(--sv-blue-500); }
+.sv-ref.is-shown .sv-ref__gift--you { transform: rotate(-6deg); }
+.sv-ref.is-shown .sv-ref__gift--friend { transform: rotate(3deg); }
+
+/* One soft pass of light across the front card once it settles. */
+.sv-ref .sv-ref__gift--friend::after {
+  content: '';
+  position: absolute;
+  inset-block: -25%;
+  inset-inline-start: 0;
+  inline-size: 18%;
+  background: rgb(255 255 255 / .8);
+  filter: blur(calc(1 * var(--sv-u)));
+  z-index: -1;
+  transform: translateX(-200%) skewX(-18deg);
+  opacity: 0;
+}
+.sv-ref.is-shown .sv-ref__gift--friend::after { animation: sv-ref-shine 1.5s var(--sv-ease-shine) 1.1s both; }
+@keyframes sv-ref-shine {
+  0% { opacity: 0; transform: translateX(-200%) skewX(-18deg); }
+  15%, 85% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(640%) skewX(-18deg); }
+}
+
+/* ---- Body -------------------------------------------------------------- */
+.sv-ref .sv-ref__body { display: block; padding: var(--sv-s-4) var(--sv-s-6) var(--sv-s-5); }
+.sv-ref .sv-ref__title {
+  display: block;
+  font-family: var(--sv-font-head);
+  font-size: calc(2 * var(--sv-u));
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  color: var(--sv-white);
+  text-wrap: balance;
+}
+.sv-ref .sv-ref__text {
+  margin-block-start: var(--sv-s-2);
+  font-size: calc(1.6 * var(--sv-u));
+  line-height: 1.55;
+  color: var(--sv-on-dark-soft);
+}
+.sv-ref .sv-ref__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sv-s-3);
+  min-block-size: var(--sv-tap);
+  margin-block-start: var(--sv-s-4);
+  padding: 0 var(--sv-s-5);
+  border-radius: var(--sv-r-md);
+  background: var(--sv-plum-500);
+  color: var(--sv-white);
+  font-family: var(--sv-font-head);
+  font-size: calc(1.6 * var(--sv-u));
+  font-weight: 600;
+  line-height: 1.25;
+  transition: transform .2s var(--sv-ease), background-color .15s linear;
+}
+.sv-ref .sv-ref__btn:hover,
+.sv-ref .sv-ref__btn:focus-visible { background: var(--sv-plum-600); color: var(--sv-white); transform: translateY(-2px); }
+.sv-ref .sv-ref__btn svg { inline-size: calc(1.8 * var(--sv-u)); block-size: calc(1.8 * var(--sv-u)); flex: none; transition: transform .35s var(--sv-ease); }
+.sv-ref .sv-ref__btn:hover svg { transform: translateX(calc(.4 * var(--sv-u))); }
+.sv-ref .sv-ref__fine {
+  margin-block-start: var(--sv-s-3);
+  font-size: calc(1.6 * var(--sv-u));
+  line-height: 1.5;
+  color: var(--sv-on-dark-faint);
+}
+
+/* ---- Close ------------------------------------------------------------- */
+.sv-ref .sv-ref__close {
+  position: absolute;
+  inset-block-start: var(--sv-s-2);
+  inset-inline-end: var(--sv-s-2);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  inline-size: var(--sv-tap);
+  block-size: var(--sv-tap);
+  border-radius: 50%;
+  color: var(--sv-white);
+  cursor: pointer;
+  opacity: .75;
+  transition: opacity .15s linear, background-color .15s linear;
+}
+.sv-ref .sv-ref__close:hover { opacity: 1; background: rgb(255 255 255 / .12); }
+.sv-ref .sv-ref__close svg { inline-size: calc(1.8 * var(--sv-u)); block-size: calc(1.8 * var(--sv-u)); }
+
+.sv-ref :where(a, button):focus-visible {
+  outline: 2px solid var(--sv-cyan-400);
+  outline-offset: 3px;
+}
+
+/* SVG strokes, shared by the arrow and the close cross. */
+.sv-ref .sv-ref__ico { display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- Phones: the card sits low, with the page visible around it ------- */
+@media (max-width: 47.99rem) {
+  .sv-ref .sv-ref__frame {
+    align-items: end;
+    padding: var(--sv-s-4) var(--sv-s-4) calc(env(safe-area-inset-bottom, 0px) + var(--sv-s-6));
+  }
+  .sv-ref .sv-ref__art { block-size: calc(9.6 * var(--sv-u)); }
+  .sv-ref .sv-ref__pair { inline-size: calc(15.2 * var(--sv-u)); block-size: calc(8.4 * var(--sv-u)); }
+  .sv-ref .sv-ref__gift b { font-size: calc(2.16 * var(--sv-u)); }
+}
+
+/* The smallest phones (under 360px): side margins, body padding and the
+   title ease a step, so the title holds to one line. */
+@media (max-width: 22.49em) {
+  .sv-ref .sv-ref__frame { padding-inline: var(--sv-s-3); }
+  .sv-ref .sv-ref__body { padding-inline: var(--sv-s-5); }
+  .sv-ref .sv-ref__title { font-size: calc(1.8 * var(--sv-u)); }
+}
+
+/* Phones on their side: too short for art over copy, so they sit side by
+   side and the whole card stays on screen with the button in reach. */
+@media (max-height: 32em) and (orientation: landscape) {
+  .sv-ref .sv-ref__frame { align-items: center; padding: var(--sv-s-3) var(--sv-s-4); }
+  .sv-ref .sv-ref__card {
+    inline-size: min(calc(64 * var(--sv-u)), 100%);
+    display: grid;
+    grid-template-columns: calc(20 * var(--sv-u)) minmax(0, 1fr);
+    align-items: center;
+  }
+  .sv-ref .sv-ref__art { block-size: 100%; min-block-size: calc(12 * var(--sv-u)); margin: 0; }
+  .sv-ref .sv-ref__pair { inline-size: calc(15.2 * var(--sv-u)); block-size: calc(8.4 * var(--sv-u)); }
+  .sv-ref .sv-ref__gift b { font-size: calc(2.16 * var(--sv-u)); }
+  .sv-ref .sv-ref__body { padding: var(--sv-s-4) var(--sv-s-6) var(--sv-s-4) var(--sv-s-2); }
+  .sv-ref .sv-ref__fine { margin-block-start: var(--sv-s-2); }
+}
+
+/* ---- Reduced motion: a plain fade, the cards already fanned ----------- */
+@media (prefers-reduced-motion: reduce) {
+  .sv-ref .sv-ref__veil,
+  .sv-ref .sv-ref__card,
+  .sv-ref .sv-ref__gift,
+  .sv-ref .sv-ref__btn,
+  .sv-ref .sv-ref__btn svg { transition: opacity .2s linear; }
+  .sv-ref .sv-ref__card,
+  .sv-ref .sv-ref__btn:hover,
+  .sv-ref .sv-ref__btn:focus-visible,
+  .sv-ref .sv-ref__btn:hover svg { transform: none; }
+  .sv-ref .sv-ref__gift--you,
+  .sv-ref.is-shown .sv-ref__gift--you { transform: rotate(-6deg); }
+  .sv-ref .sv-ref__gift--friend,
+  .sv-ref.is-shown .sv-ref__gift--friend { transform: rotate(3deg); }
+  .sv-ref.is-shown .sv-ref__gift--friend::after { animation: none; }
+}

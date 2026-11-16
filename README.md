@@ -1,67 +1,80 @@
-# Silk Vision — Homepage referral popup (staging)
+# Silk Vision — Homepage referral popup
 
-The EVO ICL referral popup, restyled on the Silk Vision design system used by
-the entropion page (`imageworksc/silkvision-entropion`). The copy is
-unchanged; only the styling moved onto the shared tokens and components.
+The EVO ICL referral popup (offered and administered by STAAR Surgical),
+built from the original mockup's design and ready to drop into the
+silkvision.net Drupal theme.
 
-Staging URL: https://imageworksc.github.io/silkvision-referral-popup/
+Staging (popup only, shows on every load):
+https://imageworksc.github.io/silkvision-referral-popup/
 
-## Structure
+## Files
 
 ```
-index.html
-css/   fonts → tokens → base → components → sections → popup
-js/main.js
-fonts/  images/  favicons  .nojekyll
+snippet.html                  ← what goes into Drupal (markup + 3 asset tags)
+css/sv-referral-popup.css     ← the popup's styles, self-contained
+js/sv-referral-popup.js       ← the popup's behaviour, no dependencies
+css/fonts.css + fonts/        ← Poppins (embedded) and Inter, optional
+index.html, css/staging.css   ← staging page only, never shipped
 ```
 
-- `css/tokens.css` and `css/fonts.css` are copied verbatim from the entropion
-  repo. `1rem = 10px`, as in the Drupal theme.
-- `css/popup.css` is the real design. Everything in `css/sections.css` is a
-  stand-in for the live homepage and the third-party widgets (Pay over time,
-  chatbot) so the popup can be judged in place.
+## Implementing it on silkvision.net
 
-## Running inside Drupal
+1. **Host the assets.** Copy `css/sv-referral-popup.css`,
+   `js/sv-referral-popup.js` and, if needed, `css/fonts.css` + `fonts/`
+   into the theme (or the CDN), and point the three URLs in
+   `snippet.html` at them. Until then the snippet loads them from this
+   GitHub Pages site, which works but should not stay in production.
+2. **Fonts.** Keep the `fonts.css` link only if the theme does not already
+   load Poppins (400/600/700) and Inter.
+3. **Place the snippet** in a Full HTML block shown on the homepage only.
+   The markup can sit anywhere: on load the script moves the popup to the
+   end of `<body>`, so no theme wrapper (transforms, overflow, z-index)
+   can trap it.
+4. **Chatbot.** Set `data-chatbot-open` on `#sv-ref` to a CSS selector
+   that matches only while the chatbot's card is open (for example the
+   widget's open-state class). While it matches, the popup waits and
+   retries every 2 s, up to 10 times. Empty means no check.
+5. **Cache.** Bump `?v=` on the CSS and JS links on every change.
+6. **Test** in a copy of the live homepage at 320, 390, 768, 1440, 1920,
+   2560, 3840 and 5120 wide, and with a phone on its side.
 
-Same rules as the entropion page, so the popup measures the same on staging
-and on silkvision.net:
+## Behaviour
 
-- `1rem = 10px`. The theme sets `html { font-size: 62.5% }`, and `base.css`
-  sets the same value. Media queries stay on the browser's 16px, so `48rem`
-  in a query still means 768px.
-- `index.html` wraps everything in `.field-html-code`, the Drupal field.
-  Element-level rules are scoped with `:where(.field-html-code)` so they
-  never reach the site's header and footer, and need no `!important`.
-- The stand-in page wrapper is `#sv-main` (never `id="main"` or the class
-  `section`: the theme caps both at 1000px), and it clears floats.
-- Anything added to the field needs the `html-wrapper` class, or the theme
-  recolours its links. `#sv-main`, `.veil` and `.pop` all carry it.
-- What ships to the homepage is the popup only: the `.veil` and `.pop`
-  markup, the icon sheet (`i-arrow`, `i-close`), `tokens.css`, `fonts.css`,
-  `base.css`, the button rules from `components.css`, `popup.css` and
-  `js/main.js`. Everything in `sections.css` is mockup.
-- CSS and JS links carry `?v=N`; bump it on every change so the theme's
-  cache serves the new files.
+- Opens 1.5 s after load on desktop (960px+), 3 s on phones and tablets.
+- Once per visit (sessionStorage).
+- Not again for 14 days once closed or clicked through (localStorage).
+- Closes with the X, a click on the veil, or Esc. Focus moves into the
+  card, is trapped there and returns afterwards.
+- If storage is blocked (private mode), it simply behaves as new.
+- Respects `prefers-reduced-motion`: a plain fade, the cards already fanned.
 
-- Past 1920px the root size follows the viewport (`base.css`, same rule as
-  entropion), so 4K and 5K screens at 1x see the 1920 layout scaled up
-  rather than a small card in the middle. Keep popup sizes in rem/em.
+Settings are data attributes on `#sv-ref` (see the header of the JS):
+`data-delay-desktop`, `data-delay-mobile`, `data-snooze-days`,
+`data-chatbot-open`, and `data-preview` (staging only).
 
-Before handing off, test it inside a copy of the live homepage at 320, 390,
-768, 1440, 1920, 2560, 3840 and 5120 wide, and with a phone on its side.
+QA on the live site: add `?svref-preview` to the URL to force the popup,
+or run `svReferralPopup.reset()` in the console to clear its memory.
+`svReferralPopup.open()` and `.close()` are there too.
 
-## The popup
+## How it stays out of the theme's way
 
-- Navy art panel (`--fill-deep`) with the two gift cards, over a white body.
-- Plum kicker, brand-blue heading, solid plum button with the sliding arrow,
-  `--r-lg` corners, `--shadow-lg`. No gradients.
-- Phones: the card sits near the bottom, above the existing widgets.
+- Every class is prefixed `.sv-ref`; every token is scoped to `.sv-ref`;
+  nothing touches `:root` or `html`.
+- Rules are two classes deep, so they outrank the theme's element rules
+  (`h2`, `p`, `a`, `button`) without `!important`, and a scoped reset
+  undoes margins, borders, fonts and pseudo-element decorations the theme
+  may add.
+- The root carries `html-wrapper`, so the theme leaves its links alone.
+- `1rem = 10px`, the theme's root size. Every size reads off one unit,
+  `--sv-u`; past 1920px it follows the screen, so 4K and 5K at 1x show
+  the 1920 popup scaled up, without changing the site's root size.
+- No inline styles, no gradients; JS is ES2015+ (`const`/`let`).
 
-## Behaviour (live rules)
+## Responsive
 
-- Appears 1.5 s after load on desktop, 3 s on phones and tablets.
-- Once per visit, never while the chatbot's card is open, and not again for
-  about two weeks once closed or clicked through (not wired in the mockup, so
-  it can be replayed).
-- Closes with the X, a click on the veil, or Esc. Focus is trapped inside and
-  returns afterwards. Respects `prefers-reduced-motion`.
+Checked at 320×568, 360×740, 375×667, 390×844, 414×896, 430×932,
+768×1024, 1024×768, 1366×768, 1440×900, 1920×1080, 2560×1440, 3840×2160
+and 5120×2880, and phones on their side (667×375, 844×390, 932×430): the
+whole card fits with no inner scroll and no sideways scroll at every size.
+Phones place the card low, within thumb reach; phones on their side set
+the art beside the copy.

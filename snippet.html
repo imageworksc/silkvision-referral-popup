@@ -1,0 +1,39 @@
+<!-- ======================================================================
+     Silk Vision — homepage referral popup (EVO ICL / STAAR Surgical)
+     Paste into a Full HTML block shown on the homepage only. See README.
+
+     1. Fonts: keep the first <link> only if the theme does not already
+        load Poppins (400/600/700) and Inter. It embeds both.
+     2. Move the CSS, JS and fonts into the theme (or the CDN) before
+        go-live and update the three URLs. Bump ?v= on every change.
+     3. Settings live on #sv-ref as data attributes; see the JS header.
+     ====================================================================== -->
+<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/fonts.css?v=1">
+<link rel="stylesheet" href="https://imageworksc.github.io/silkvision-referral-popup/css/sv-referral-popup.css?v=1">
+
+<div class="sv-ref html-wrapper" id="sv-ref" hidden
+     data-delay-desktop="1500" data-delay-mobile="3000" data-snooze-days="14" data-chatbot-open="">
+  <div class="sv-ref__veil" data-sv-ref-close></div>
+  <div class="sv-ref__frame">
+    <div class="sv-ref__card" role="dialog" aria-modal="true" aria-labelledby="sv-ref-title" aria-describedby="sv-ref-text" tabindex="-1">
+      <button class="sv-ref__close" type="button" aria-label="Close" data-sv-ref-close>
+        <svg class="sv-ref__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="sv-ref__art" aria-hidden="true">
+        <div class="sv-ref__pair">
+          <div class="sv-ref__gift sv-ref__gift--you"><b><small>$</small>100</b><i>for You</i></div>
+          <div class="sv-ref__gift sv-ref__gift--friend"><b><small>$</small>200</b><i>for a Friend</i></div>
+        </div>
+      </div>
+      <div class="sv-ref__body">
+        <h2 class="sv-ref__title" id="sv-ref-title">Love Your EVO ICL Vision?</h2>
+        <p class="sv-ref__text" id="sv-ref-text">Refer a friend and you could receive a $100&nbsp;gift&nbsp;card. Your friend could receive $200, too!</p>
+        <a class="sv-ref__btn" href="https://www.silkvision.net/special-offers">Learn More
+          <svg class="sv-ref__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <p class="sv-ref__fine">Offered and administered by STAAR&nbsp;Surgical. Terms&nbsp;apply.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://imageworksc.github.io/silkvision-referral-popup/js/sv-referral-popup.js?v=1" defer></script>

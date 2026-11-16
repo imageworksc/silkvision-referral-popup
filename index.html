@@ -3,109 +3,45 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Homepage referral popup — Silk Vision (mockup)</title>
+<title>Referral popup — Silk Vision (staging)</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="css/fonts.css?v=7">
-<link rel="stylesheet" href="css/tokens.css?v=7">
-<link rel="stylesheet" href="css/base.css?v=7">
-<link rel="stylesheet" href="css/components.css?v=7">
-<link rel="stylesheet" href="css/sections.css?v=7">
-<link rel="stylesheet" href="css/popup.css?v=7">
-<script src="js/main.js?v=7" defer></script>
+<!-- Staging only: the theme's 10px root and a plain page. -->
+<link rel="stylesheet" href="css/staging.css?v=1">
+<!-- From here down, the same as snippet.html, with local paths and
+     data-preview="true" so the popup shows on every load. -->
+<link rel="stylesheet" href="css/fonts.css?v=1">
+<link rel="stylesheet" href="css/sv-referral-popup.css?v=1">
+<script src="js/sv-referral-popup.js?v=1" defer></script>
 </head>
 <body>
-<!-- Stands in for the Drupal field the page is rendered in. See README. -->
-<div class="field-html-code">
 
-<svg class="icon-sheet" aria-hidden="true">
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h14M12.5 5.5L19 12l-6.5 6.5"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.8 3.4h3.1l1.5 3.9-2 1.4a12.3 12.3 0 006 6l1.4-2 3.9 1.5v3.1a2 2 0 01-2.2 2A17.6 17.6 0 013.3 5.6a2 2 0 012-2.2z"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z"/></symbol>
-  <symbol id="i-replay" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></symbol>
-</svg>
-
-<div class="switcher" role="group" aria-label="Mockup controls">
-  <button class="btn btn--ghost" type="button" data-replay aria-label="Replay popup">
-    <svg class="ico" aria-hidden="true"><use href="#i-replay"/></svg><span class="switcher__label">Replay popup</span></button>
-</div>
-
-<!-- ===== Homepage stand-in ============================================ -->
-<div class="topbar">
-  <div class="wrap cluster cluster--between">
-    <div class="cluster">
-      <a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay Bill Online</a>
-      <a href="https://www.silkvision.net/special-offers">Special Offers</a>
-    </div>
-    <a href="tel:+17038769700"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Call or Text: (703)&nbsp;876-9700</a>
-  </div>
-</div>
-
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="https://www.silkvision.net/">
-      <img src="images/logo.png" width="200" height="50" alt="Silk Vision &amp; Surgical Center — home">
-    </a>
-    <nav class="nav" aria-label="Placeholder navigation">
-      <a href="#">Vision Correction</a>
-      <a href="#">Eye Care</a>
-      <a href="#">About</a>
-      <a href="#">Patients</a>
-      <a class="btn btn--solid" href="#">Book a consultation
-        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </nav>
-  </div>
-</header>
-
-<div class="announce"><strong>Office-Based Surgery</strong>A New, Advanced Option for Convenient and Affordable Eye Care. <a href="#">Learn More</a></div>
-
-<main id="sv-main" class="html-wrapper">
-  <section class="hero">
-    <div class="wrap">
-      <h1>Imagine Waking Up and Seeing Clearly —&nbsp;Every&nbsp;Day</h1>
-      <p class="lead">There’s a better way to see the world. At Silk Vision, we help you leave behind the hassle and discomfort—so you can wake up to crystal-clear vision with personalized LASIK and other advanced procedures.</p>
-      <a class="btn btn--ghost" href="#">Schedule Your Eye Evaluation
-        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-  </section>
-  <section class="band band--tint"><div class="wrap"><p>Placeholder</p></div></section>
-</main>
-
-<!-- ===== The referral popup ========================================== -->
-<div class="veil html-wrapper" data-close hidden></div>
-<div class="pop html-wrapper" id="pop" hidden>
-  <div class="pop__card" role="dialog" aria-modal="true" aria-labelledby="pop-title" aria-describedby="pop-text" tabindex="-1">
-    <button class="pop__close" type="button" aria-label="Close" data-close>
-      <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
-    <div class="pop__art" aria-hidden="true">
-      <div class="pair">
-        <div class="g g--you"><span class="g__brand">Silk Vision</span><b><small>$</small>100</b><i>For you</i>
-          <span class="g__band"></span>
-          <svg class="g__bow" viewBox="0 0 30 22"><path d="M13.6 11C10 4 2.5 3.5 2.5 8.5s6.5 4.5 11.1 2.5zm2.8 0C20 4 27.5 3.5 27.5 8.5s-6.5 4.5-11.1 2.5zM13 13l-3.5 7M17 13l3.5 7"/><rect x="12.6" y="9.4" width="4.8" height="4.2" rx="1.2"/></svg></div>
-        <div class="g g--friend"><span class="g__brand">Silk Vision</span><b><small>$</small>200</b><i>For a friend</i>
-          <span class="g__band"></span>
-          <svg class="g__bow" viewBox="0 0 30 22"><path d="M13.6 11C10 4 2.5 3.5 2.5 8.5s6.5 4.5 11.1 2.5zm2.8 0C20 4 27.5 3.5 27.5 8.5s-6.5 4.5-11.1 2.5zM13 13l-3.5 7M17 13l3.5 7"/><rect x="12.6" y="9.4" width="4.8" height="4.2" rx="1.2"/></svg></div>
+<div class="sv-ref html-wrapper" id="sv-ref" hidden
+     data-delay-desktop="1500" data-delay-mobile="3000" data-snooze-days="14" data-chatbot-open="" data-preview="true">
+  <div class="sv-ref__veil" data-sv-ref-close></div>
+  <div class="sv-ref__frame">
+    <div class="sv-ref__card" role="dialog" aria-modal="true" aria-labelledby="sv-ref-title" aria-describedby="sv-ref-text" tabindex="-1">
+      <button class="sv-ref__close" type="button" aria-label="Close" data-sv-ref-close>
+        <svg class="sv-ref__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="sv-ref__art" aria-hidden="true">
+        <div class="sv-ref__pair">
+          <div class="sv-ref__gift sv-ref__gift--you"><b><small>$</small>100</b><i>for You</i></div>
+          <div class="sv-ref__gift sv-ref__gift--friend"><b><small>$</small>200</b><i>for a Friend</i></div>
+        </div>
+      </div>
+      <div class="sv-ref__body">
+        <h2 class="sv-ref__title" id="sv-ref-title">Love Your EVO ICL Vision?</h2>
+        <p class="sv-ref__text" id="sv-ref-text">Refer a friend and you could receive a $100&nbsp;gift&nbsp;card. Your friend could receive $200, too!</p>
+        <a class="sv-ref__btn" href="https://www.silkvision.net/special-offers">Learn More
+          <svg class="sv-ref__ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <p class="sv-ref__fine">Offered and administered by STAAR&nbsp;Surgical. Terms&nbsp;apply.</p>
       </div>
     </div>
-    <div class="pop__body">
-      <span class="kicker">Refer a friend</span>
-      <h2 class="pop__title" id="pop-title">Love Your EVO ICL Vision?</h2>
-      <p class="pop__text" id="pop-text">Refer a friend and you could receive a <strong>$100&nbsp;gift&nbsp;card</strong>. Your friend could receive <strong>$200</strong>, too!</p>
-      <a class="btn btn--solid pop__btn" href="https://www.silkvision.net/special-offers">Learn More
-        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <p class="pop__fine">Offered and administered by STAAR&nbsp;Surgical. Terms&nbsp;apply.</p>
-    </div>
   </div>
 </div>
 
-<!-- ===== Stand-ins for the existing widgets ========================== -->
-<div class="pot" aria-hidden="true"><span class="standin-note">existing</span><i>%</i><span><b>Pay over time</b><small>No hard credit checks · 0% APR options</small></span></div>
-<div class="bot-card" id="botCard" hidden><b>Chatbot (existing)</b>Stand-in for the chatbot’s card.</div>
-<button class="bot-launch" type="button" id="botLaunch" aria-label="Chatbot (stand-in)"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></button>
-
-</div>
 </body>
 </html>
