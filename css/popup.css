@@ -66,28 +66,37 @@
   overflow: hidden; isolation: isolate;
   transition: transform 1.1s var(--ease) .2s;
 }
+/* Brand mark at the top, amount under it, the card's title in the bottom
+   corner. The back card's bottom left stays clear of the front card. */
 .g i {
+  margin-block-start: auto;
   font-style: normal; font-size: 1.1em; font-weight: 800; line-height: 1;
   letter-spacing: var(--ls-wide); text-transform: uppercase;
 }
 .g b { font-size: 3.6em; font-weight: 800; line-height: .9; letter-spacing: var(--ls-tight); }
 .g b small { font-size: .42em; font-weight: 700; vertical-align: 1em; margin-inline-end: .06em; }
 .g__brand {
-  margin-block-start: auto;
-  font-size: .95em; font-weight: 700; line-height: 1;
+  font-size: .85em; font-weight: 700; line-height: 1;
   letter-spacing: .18em; text-transform: uppercase;
 }
+.g--you .g__brand { color: var(--on-dark-faint); }
 
-/* The ribbon: one flat vertical band, a bow where it meets the top edge. */
-.g::before {
-  content: ''; position: absolute; z-index: -1;
-  inset-block: 0; inset-inline-end: 2.4em; inline-size: 1.2em;
-}
+/* The ribbon: a vertical band and a horizontal one, flat, crossing below
+   the amount, with the bow tied where they meet. The horizontal band runs
+   between the amount and the card's title in the bottom corner. */
+.g { --rib: 1em; --rib-x: 2.4em; --rib-y: 3.1em; }
+.g::before, .g__band { content: ''; position: absolute; z-index: -1; }
+.g::before { inset-block: 0; inset-inline-end: var(--rib-x); inline-size: var(--rib); }
+.g__band { inset-inline: 0; inset-block-end: var(--rib-y); block-size: var(--rib); }
 .g__bow {
-  position: absolute; inset-block-start: .7em; inset-inline-end: 1.5em;
-  inline-size: 3em; block-size: 2em;
-  fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round;
+  position: absolute;
+  inline-size: 3.6em; block-size: 2.64em;
+  /* Knot centre (viewBox 15, 11.5 of 30 × 22) on the bands' crossing. */
+  inset-inline-end: calc(var(--rib-x) + var(--rib) / 2 - 1.8em);
+  inset-block-end: calc(var(--rib-y) + var(--rib) / 2 - 1.26em);
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
+.g__bow rect { fill: currentColor; }
 
 .g--you {
   inline-size: 15em; inset-block-start: .4em; inset-inline-start: 0;
@@ -95,8 +104,7 @@
   box-shadow: inset 0 0 0 1px var(--hairline-dark);
 }
 .g--you i { color: var(--cyan-300); }
-.g--you::before { background: rgb(255 255 255 / .1); }
-.g--you .g__bow { color: var(--cyan-300); }
+.g--you::before, .g--you .g__band { background: rgb(255 255 255 / .1); }.g--you .g__bow { color: var(--cyan-300); }
 
 .g--friend {
   inline-size: 17.6em; inset-block-end: 0; inset-inline-end: 0;
@@ -104,7 +112,7 @@
   box-shadow: 0 1.2em 2.8em rgb(0 19 37 / .4), 0 .2em .5em rgb(0 19 37 / .2);
 }
 .g--friend i { color: var(--plum-600); }
-.g--friend::before { background: var(--plum-100); }
+.g--friend::before, .g--friend .g__band { background: var(--plum-100); }
 .g--friend .g__bow { color: var(--plum-500); }
 .g--friend .g__brand { color: var(--text-faint); }
 
