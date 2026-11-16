@@ -13,6 +13,15 @@ html {
 
 body { margin: 0; }
 
+/* Large screens — the same rule as the entropion page. Every measure is in
+   rem, so letting the root size follow the viewport past 120rem (1920px)
+   scales the page and the popup as one: a 4K or 5K screen at 1x sees the
+   1920 layout, larger and sharper, instead of a 460px card lost in the
+   middle. max() keeps a reader's own larger default. */
+@media (min-width: 120rem) {
+  html { font-size: max(62.5%, 100vw / 192); }
+}
+
 .field-html-code {
   background: var(--white);
   color: var(--text);

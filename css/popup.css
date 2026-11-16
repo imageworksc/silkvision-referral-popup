@@ -45,6 +45,8 @@
   position: relative;
   display: grid; place-items: center;
   block-size: 17.6rem;
+  /* Keeps the front card's shadow on the navy, off the white body. */
+  overflow: hidden;
   background: var(--fill-deep);
   border-block-end: 1px solid var(--hairline-dark);
 }
@@ -113,7 +115,7 @@
 /* One soft pass of light across the front card once it settles. */
 .g--friend::after {
   content: ''; position: absolute; inset-block: -25%; inset-inline-start: 0; inline-size: 18%;
-  background: rgb(204 222 234 / .9); filter: blur(10px); z-index: -1;
+  background: rgb(204 222 234 / .9); filter: blur(1em); z-index: -1;
   transform: translateX(-200%) skewX(-18deg); opacity: 0;
 }
 .is-shown .g--friend::after { animation: pop-shine 1.5s var(--ease-soft) 1.1s both; }
@@ -154,7 +156,8 @@
 .pop__close {
   position: absolute; inset-block-start: var(--s-2); inset-inline-end: var(--s-2); z-index: 2;
   display: grid; place-items: center;
-  inline-size: var(--tap); block-size: var(--tap);
+  /* Never under a fingertip; grows with the root on 4K/5K screens. */
+  inline-size: max(var(--tap), 4.4rem); block-size: max(var(--tap), 4.4rem);
   padding: 0; border: 0; border-radius: 50%;
   background: transparent; color: var(--white);
   cursor: pointer; opacity: .8;

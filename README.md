@@ -43,8 +43,12 @@ and on silkvision.net:
 - CSS and JS links carry `?v=N`; bump it on every change so the theme's
   cache serves the new files.
 
+- Past 1920px the root size follows the viewport (`base.css`, same rule as
+  entropion), so 4K and 5K screens at 1x see the 1920 layout scaled up
+  rather than a small card in the middle. Keep popup sizes in rem/em.
+
 Before handing off, test it inside a copy of the live homepage at 320, 390,
-768, 1440, 1920 and 2560 wide, and with a phone on its side.
+768, 1440, 1920, 2560, 3840 and 5120 wide, and with a phone on its side.
 
 ## The popup
 
