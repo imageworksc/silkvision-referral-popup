@@ -199,10 +199,13 @@
   .pop__fine { margin-block-start: var(--s-3); padding-block-start: var(--s-2); }
 }
 
+/* Reduced motion: a plain fade, the cards already fanned. Last in the file
+   and at the same specificity as the rules it replaces, so no !important. */
 @media (prefers-reduced-motion: reduce) {
-  .veil, .pop__card, .g { transition: opacity .2s linear !important; }
-  .pop__card { transform: none !important; }
-  .g--you, .is-shown .g--you { transform: rotate(-6deg) !important; }
-  .g--friend, .is-shown .g--friend { transform: rotate(3deg) !important; }
+  .veil, .pop__card, .g { transition: opacity .2s linear; }
+  .pop__card, .is-shown .pop__card { transform: none; }
+  .g--you, .is-shown .g--you { transform: rotate(-7deg); }
+  .g--friend, .is-shown .g--friend { transform: rotate(3deg); }
   .is-shown .g--friend::after { animation: none; }
+  .pop .btn:hover, .pop .btn:hover .ico--arrow { transform: none; }
 }

@@ -32,6 +32,9 @@
 
 /* ----- Third-party stand-ins -------------------------------------------- */
 :root {
+  /* The widgets' own colours, as they appear on the live homepage. */
+  --standin-pot: #1f5fa8;
+  --standin-bot: #1d47b1;
   --stack-x: clamp(1.6rem, 2.2vw, 2.8rem);
   --stack-y: calc(env(safe-area-inset-bottom, 0px) + clamp(1.6rem, 2.2vw, 2.8rem));
 }
@@ -42,11 +45,11 @@
   inline-size: 32rem; block-size: 5.6rem;
   padding: 0 var(--s-5) 0 var(--s-3);
   border-radius: var(--r-pill);
-  background: #1f5fa8; color: var(--white);
+  background: var(--standin-pot); color: var(--white);
   font-size: 1.3rem; line-height: 1.25;
   box-shadow: var(--shadow-md);
 }
-.pot i { display: grid; place-items: center; flex: none; inline-size: 3.2rem; block-size: 3.2rem; border-radius: 50%; background: var(--white); color: #1f5fa8; font-style: normal; font-weight: 700; }
+.pot i { display: grid; place-items: center; flex: none; inline-size: 3.2rem; block-size: 3.2rem; border-radius: 50%; background: var(--white); color: var(--standin-pot); font-style: normal; font-weight: 700; }
 .pot b { display: block; font-size: 1.6rem; white-space: nowrap; }
 .pot small { display: block; font-size: 1.3rem; opacity: .9; white-space: nowrap; }
 @media (max-width: 30rem) { .pot { inline-size: calc(100% - 9rem - var(--stack-x)); } .pot small { display: none; } }
@@ -54,7 +57,7 @@
 .bot-launch {
   position: fixed; z-index: 30; inset-inline-end: var(--stack-x); inset-block-end: var(--stack-y);
   display: grid; place-items: center; inline-size: 6rem; block-size: 6rem;
-  border: 0; border-radius: 50%; background: #1d47b1; color: var(--white); cursor: pointer;
+  border: 0; border-radius: 50%; background: var(--standin-bot); color: var(--white); cursor: pointer;
   box-shadow: var(--shadow-md);
 }
 .bot-launch .ico { font-size: 1.6rem; }
