@@ -46,6 +46,20 @@ body { margin: 0; }
   border-radius: var(--r-sm);
 }
 
+/* The page wrapper. In Drupal the theme's floated main menu hangs 4px below
+   the header; without clear, the hero narrows to dodge it. Never name this
+   id "main": the theme caps #main at 1000px. */
+#sv-main { clear: both; width: 100%; }
+
+/* Precaution, not yet measured against the live theme: the popup sits
+   outside #sv-main, so pin the two element rules a theme most often reaches
+   (button line-height and font, paragraph side margins). Test inside a copy
+   of the live homepage and replace with measured guards, as entropion did. */
+.pop.html-wrapper button { line-height: 1; font-family: var(--font); }
+.pop.html-wrapper p { margin-inline: 0; }
+
+/* The symbol sheet is referenced, never rendered. Out of flow so it cannot
+   contribute a stray line box at the top of the document. */
 .icon-sheet { position: absolute; }
 
 .wrap {

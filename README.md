@@ -21,6 +21,31 @@ fonts/  images/  favicons  .nojekyll
   stand-in for the live homepage and the third-party widgets (Pay over time,
   chatbot) so the popup can be judged in place.
 
+## Running inside Drupal
+
+Same rules as the entropion page, so the popup measures the same on staging
+and on silkvision.net:
+
+- `1rem = 10px`. The theme sets `html { font-size: 62.5% }`, and `base.css`
+  sets the same value. Media queries stay on the browser's 16px, so `48rem`
+  in a query still means 768px.
+- `index.html` wraps everything in `.field-html-code`, the Drupal field.
+  Element-level rules are scoped with `:where(.field-html-code)` so they
+  never reach the site's header and footer, and need no `!important`.
+- The stand-in page wrapper is `#sv-main` (never `id="main"` or the class
+  `section`: the theme caps both at 1000px), and it clears floats.
+- Anything added to the field needs the `html-wrapper` class, or the theme
+  recolours its links. `#sv-main`, `.veil` and `.pop` all carry it.
+- What ships to the homepage is the popup only: the `.veil` and `.pop`
+  markup, the icon sheet (`i-arrow`, `i-close`), `tokens.css`, `fonts.css`,
+  `base.css`, the button rules from `components.css`, `popup.css` and
+  `js/main.js`. Everything in `sections.css` is mockup.
+- CSS and JS links carry `?v=N`; bump it on every change so the theme's
+  cache serves the new files.
+
+Before handing off, test it inside a copy of the live homepage at 320, 390,
+768, 1440, 1920 and 2560 wide, and with a phone on its side.
+
 ## The popup
 
 - Navy art panel (`--fill-deep`) with the two gift cards, over a white body.
