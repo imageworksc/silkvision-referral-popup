@@ -80,3 +80,9 @@
   box-shadow: var(--shadow-md);
 }
 .switcher .btn { min-block-size: var(--tap); padding-inline: var(--s-4); }
+/* Phones: icon only, so it clears the logo. */
+@media (max-width: 47.99rem) {
+  .switcher { inset-block-start: var(--s-2); inset-inline-end: var(--s-2); padding: var(--s-1); }
+  .switcher .btn { padding-inline: 0; inline-size: var(--tap); }
+  .switcher__label { display: none; }
+}

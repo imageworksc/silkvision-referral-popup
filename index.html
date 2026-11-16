@@ -27,8 +27,8 @@
 </svg>
 
 <div class="switcher" role="group" aria-label="Mockup controls">
-  <button class="btn btn--ghost" type="button" data-replay>
-    <svg class="ico" aria-hidden="true"><use href="#i-replay"/></svg>Replay popup</button>
+  <button class="btn btn--ghost" type="button" data-replay aria-label="Replay popup">
+    <svg class="ico" aria-hidden="true"><use href="#i-replay"/></svg><span class="switcher__label">Replay popup</span></button>
 </div>
 
 <!-- ===== Homepage stand-in ============================================ -->
@@ -80,8 +80,10 @@
       <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
     <div class="pop__art" aria-hidden="true">
       <div class="pair">
-        <div class="g g--you"><b><small>$</small>100</b><i>For you</i></div>
-        <div class="g g--friend"><b><small>$</small>200</b><i>For a friend</i></div>
+        <div class="g g--you"><i>For you</i><b><small>$</small>100</b>
+          <svg class="g__bow" viewBox="0 0 30 20"><path d="M15 12C11 4 3 3 3 8s7 5 12 4zm0 0c4-8 12-9 12-4s-7 5-12 4z"/></svg></div>
+        <div class="g g--friend"><i>For a friend</i><b><small>$</small>200</b><span class="g__brand">Silk Vision</span>
+          <svg class="g__bow" viewBox="0 0 30 20"><path d="M15 12C11 4 3 3 3 8s7 5 12 4zm0 0c4-8 12-9 12-4s-7 5-12 4z"/></svg></div>
       </div>
     </div>
     <div class="pop__body">
