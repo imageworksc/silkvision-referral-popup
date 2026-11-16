@@ -7,6 +7,9 @@ silkvision.net Drupal theme.
 Staging (popup only, shows on every load):
 https://imageworksc.github.io/silkvision-referral-popup/
 
+**Installing it on the site? Follow [TUTORIAL.md](TUTORIAL.md)** — a
+step-by-step guide for the Drupal back office.
+
 ## Files
 
 ```
