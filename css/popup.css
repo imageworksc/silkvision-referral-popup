@@ -1,0 +1,153 @@
+/* ==========================================================================
+   The referral popup — the real design.
+
+   A small card over a light veil: it asks for attention without taking the
+   page away. Built from the entropion set: a navy art panel (the card-deep
+   ground) over a white body, a plum kicker, the brand-blue heading, the
+   solid plum button with the sliding arrow, the 14px card radius and
+   --shadow-lg. No gradients.
+   ========================================================================== */
+
+.veil {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgb(0 19 37 / .32);
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease);
+}
+.pop {
+  position: fixed; inset: 0; z-index: 71;
+  display: grid; place-items: center;
+  padding: var(--s-5);
+  pointer-events: none;
+}
+.pop[hidden], .veil[hidden] { display: none; }
+
+.pop__card {
+  position: relative;
+  inline-size: min(46rem, 100%);
+  max-block-size: calc(100dvh - 2 * var(--s-5));
+  overflow: auto;
+  border-radius: var(--r-lg);
+  background: var(--white);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(1.2rem) scale(.98);
+  transition: opacity var(--t-slow) var(--ease), transform .9s var(--ease);
+  pointer-events: auto;
+}
+.pop__card:focus { outline: none; }
+.is-shown .veil { opacity: 1; }
+.is-shown .pop__card { opacity: 1; transform: none; }
+
+/* ----- Art: the two gift cards on the navy ground ----------------------- */
+.pop__art {
+  position: relative;
+  display: grid; place-items: center;
+  block-size: 17.6rem;
+  background: var(--fill-deep);
+  border-block-end: 1px solid var(--hairline-dark);
+}
+.pair { position: relative; inline-size: 24rem; block-size: 13.2rem; }
+.g {
+  position: absolute;
+  display: flex; flex-direction: column; justify-content: space-between;
+  aspect-ratio: 1.586;
+  padding: 1.2rem 1.4rem;
+  border-radius: var(--r-md);
+  overflow: hidden; isolation: isolate;
+  transition: transform 1.1s var(--ease) .2s;
+}
+.g b { font-size: 3.4rem; font-weight: 800; line-height: .9; letter-spacing: var(--ls-tight); }
+.g b small { font-size: .45em; font-weight: 700; vertical-align: .9em; margin-inline-end: .06em; }
+.g i {
+  font-style: normal; font-size: 1.2rem; font-weight: 800;
+  letter-spacing: var(--ls-wide); text-transform: uppercase;
+}
+.g--you {
+  inline-size: 58%; inset-block-start: 4%; inset-inline-start: 0;
+  background: var(--ink-600); color: var(--white);
+  border: 1px solid var(--hairline-dark);
+}
+.g--you i { color: var(--cyan-300); }
+.g--friend {
+  inline-size: 66%; inset-block-end: 0; inset-inline-end: 0;
+  background: var(--white); color: var(--heading);
+  box-shadow: 0 1rem 2.4rem rgb(0 19 37 / .35);
+}
+.g--friend i { color: var(--plum-600); }
+.g--you, .g--friend { transform: translateY(.8rem); }
+.is-shown .g--you    { transform: rotate(-6deg); }
+.is-shown .g--friend { transform: rotate(3deg); }
+
+/* One soft pass of light across the front card once it settles. */
+.g--friend::after {
+  content: ''; position: absolute; inset-block: -25%; inset-inline-start: 0; inline-size: 18%;
+  background: rgb(204 222 234 / .9); filter: blur(10px); z-index: -1;
+  transform: translateX(-200%) skewX(-18deg); opacity: 0;
+}
+.is-shown .g--friend::after { animation: pop-shine 1.5s var(--ease-soft) 1.1s both; }
+@keyframes pop-shine {
+  0% { opacity: 0; transform: translateX(-200%) skewX(-18deg); }
+  15%, 85% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(640%) skewX(-18deg); }
+}
+
+/* ----- Body -------------------------------------------------------------- */
+.pop__body {
+  display: grid; justify-items: center;
+  padding: var(--s-6) var(--s-6) var(--s-5);
+  text-align: center;
+}
+.pop__body .kicker { margin-block-end: var(--s-2); }
+.pop__title { font-size: var(--t-h3); }
+.pop__text {
+  margin-block-start: var(--s-3);
+  max-width: 34ch;
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.pop__text strong { color: var(--heading); font-weight: 700; }
+.pop__btn { inline-size: 100%; margin-block-start: var(--s-5); }
+.pop__fine {
+  inline-size: 100%;
+  max-width: none;
+  margin-block-start: var(--s-5);
+  padding-block-start: var(--s-4);
+  border-block-start: 1px solid var(--hairline);
+  font-size: var(--t-xs);
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+.pop__close {
+  position: absolute; inset-block-start: var(--s-2); inset-inline-end: var(--s-2); z-index: 2;
+  display: grid; place-items: center;
+  inline-size: var(--tap); block-size: var(--tap);
+  padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: var(--white);
+  cursor: pointer; opacity: .8;
+  transition: opacity var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
+}
+.pop__close:hover { opacity: 1; background: rgb(255 255 255 / .12); }
+.pop__close .ico { font-size: 1.6rem; }
+
+/* Phones: the card sits low, a thumb's reach, with the page visible above. */
+@media (max-width: 47.99rem) {
+  .pop { align-items: end; padding: var(--s-4) var(--s-4) calc(env(safe-area-inset-bottom, 0px) + var(--s-6)); }
+  .pop__art { block-size: 13.6rem; }
+  .pair { inline-size: 19rem; block-size: 10.4rem; }
+  .g { padding: 1rem 1.1rem; }
+  .g b { font-size: 2.7rem; }
+  .g i { font-size: 1rem; }
+  .pop__body { padding: var(--s-5) var(--s-5) var(--s-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil, .pop__card, .g { transition: opacity .2s linear !important; }
+  .pop__card { transform: none !important; }
+  .g--you, .is-shown .g--you { transform: rotate(-6deg) !important; }
+  .g--friend, .is-shown .g--friend { transform: rotate(3deg) !important; }
+  .is-shown .g--friend::after { animation: none; }
+}

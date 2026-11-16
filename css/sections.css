@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Mockup only. The announcement, hero and placeholder band stand in for the
+   live homepage so the popup can be judged in place. The "Pay over time"
+   pill and the chatbot are third-party widgets, drawn as stand-ins.
+   ========================================================================== */
+
+.announce {
+  padding: var(--s-5) var(--gutter);
+  background: var(--fill-action);
+  color: var(--white);
+  text-align: center;
+  font-size: var(--t-sm);
+}
+.announce strong { display: block; margin-block-end: var(--s-1); font-size: var(--t-h3); font-weight: 600; }
+.announce a { color: var(--white); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+
+.hero {
+  display: grid; align-items: center;
+  min-block-size: 72vh;
+  padding-block: var(--band-y);
+  background: var(--fill-deep);
+  color: var(--on-dark);
+}
+.hero h1 { max-width: 13em; color: var(--white); }
+.hero .lead { margin-block-start: var(--s-5); max-width: 54ch; color: var(--pale-200); }
+.hero .btn { margin-block-start: var(--s-7); }
+
+.band { padding-block: var(--band-y); }
+.band--tint { background: var(--pale-100); }
+.band--tint .wrap { display: grid; place-items: center; min-block-size: 24rem; }
+.band--tint p { font-weight: 600; color: var(--heading); }
+
+/* ----- Third-party stand-ins -------------------------------------------- */
+:root {
+  --stack-x: clamp(1.6rem, 2.2vw, 2.8rem);
+  --stack-y: calc(env(safe-area-inset-bottom, 0px) + clamp(1.6rem, 2.2vw, 2.8rem));
+}
+.pot {
+  position: fixed; z-index: 30;
+  inset-inline-start: var(--stack-x); inset-block-end: var(--stack-y);
+  display: flex; align-items: center; gap: var(--s-3);
+  inline-size: 32rem; block-size: 5.6rem;
+  padding: 0 var(--s-5) 0 var(--s-3);
+  border-radius: var(--r-pill);
+  background: #1f5fa8; color: var(--white);
+  font-size: 1.3rem; line-height: 1.25;
+  box-shadow: var(--shadow-md);
+}
+.pot i { display: grid; place-items: center; flex: none; inline-size: 3.2rem; block-size: 3.2rem; border-radius: 50%; background: var(--white); color: #1f5fa8; font-style: normal; font-weight: 700; }
+.pot b { display: block; font-size: 1.6rem; white-space: nowrap; }
+.pot small { display: block; font-size: 1.3rem; opacity: .9; white-space: nowrap; }
+@media (max-width: 30rem) { .pot { inline-size: calc(100% - 9rem - var(--stack-x)); } .pot small { display: none; } }
+
+.bot-launch {
+  position: fixed; z-index: 30; inset-inline-end: var(--stack-x); inset-block-end: var(--stack-y);
+  display: grid; place-items: center; inline-size: 6rem; block-size: 6rem;
+  border: 0; border-radius: 50%; background: #1d47b1; color: var(--white); cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+.bot-launch .ico { font-size: 1.6rem; }
+.bot-card {
+  position: fixed; z-index: 30; inset-inline-end: var(--stack-x); inset-block-end: calc(var(--stack-y) + 7.2rem);
+  inline-size: min(28.8rem, calc(100% - 3.2rem)); padding: var(--s-5);
+  background: var(--paper); border-radius: var(--r-md); box-shadow: var(--shadow-lg);
+  font-size: var(--t-sm); color: var(--text-soft);
+}
+.bot-card[hidden] { display: none; }
+.bot-card b { display: block; margin-block-end: var(--s-2); color: var(--heading); }
+.standin-note {
+  position: absolute; inset-block-start: -1rem; inset-inline-start: 1.2rem;
+  padding: 0 .6rem; background: var(--white); border-radius: .4rem;
+  font-size: 1.2rem; font-weight: 600; color: var(--grey-500);
+}
+
+/* ----- Mockup chrome ---------------------------------------------------- */
+.switcher {
+  position: fixed; z-index: 60; inset-block-start: var(--s-3); inset-inline-end: var(--s-3);
+  padding: var(--s-2);
+  background: var(--white); border: 1px solid var(--hairline); border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+}
+.switcher .btn { min-block-size: var(--tap); padding-inline: var(--s-4); }

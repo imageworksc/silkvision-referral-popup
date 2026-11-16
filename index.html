@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Homepage referral popup — Silk Vision (mockup)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/popup.css">
+<script src="js/main.js" defer></script>
+</head>
+<body class="field-html-code">
+
+<svg class="icon-sheet" width="0" height="0" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h14M12.5 5.5L19 12l-6.5 6.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.8 3.4h3.1l1.5 3.9-2 1.4a12.3 12.3 0 006 6l1.4-2 3.9 1.5v3.1a2 2 0 01-2.2 2A17.6 17.6 0 013.3 5.6a2 2 0 012-2.2z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5 5h14v10H9l-4 4z"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"/></symbol>
+</svg>
+
+<div class="switcher" role="group" aria-label="Mockup controls">
+  <button class="btn btn--ghost" type="button" data-replay>
+    <svg class="ico" aria-hidden="true"><use href="#i-replay"/></svg>Replay popup</button>
+</div>
+
+<!-- ===== Homepage stand-in ============================================ -->
+<div class="topbar">
+  <div class="wrap cluster cluster--between">
+    <div class="cluster">
+      <a href="https://www.mypatientvisit.com/#/login?practiceID=FCPGUL" target="_blank" rel="noopener">Pay Bill Online</a>
+      <a href="https://www.silkvision.net/special-offers">Special Offers</a>
+    </div>
+    <a href="tel:+17038769700"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Call or Text: (703)&nbsp;876-9700</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="https://www.silkvision.net/">
+      <img src="images/logo.png" width="200" height="50" alt="Silk Vision &amp; Surgical Center — home">
+    </a>
+    <nav class="nav" aria-label="Placeholder navigation">
+      <a href="#">Vision Correction</a>
+      <a href="#">Eye Care</a>
+      <a href="#">About</a>
+      <a href="#">Patients</a>
+      <a class="btn btn--solid" href="#">Book a consultation
+        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </div>
+</header>
+
+<div class="announce"><strong>Office-Based Surgery</strong>A New, Advanced Option for Convenient and Affordable Eye Care. <a href="#">Learn More</a></div>
+
+<main id="sv-main" class="html-wrapper">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Imagine Waking Up and Seeing Clearly —&nbsp;Every&nbsp;Day</h1>
+      <p class="lead">There’s a better way to see the world. At Silk Vision, we help you leave behind the hassle and discomfort—so you can wake up to crystal-clear vision with personalized LASIK and other advanced procedures.</p>
+      <a class="btn btn--ghost" href="#">Schedule Your Eye Evaluation
+        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+  <section class="band band--tint"><div class="wrap"><p>Placeholder</p></div></section>
+</main>
+
+<!-- ===== The referral popup ========================================== -->
+<div class="veil" data-close hidden></div>
+<div class="pop" id="pop" hidden>
+  <div class="pop__card" role="dialog" aria-modal="true" aria-labelledby="pop-title" aria-describedby="pop-text" tabindex="-1">
+    <button class="pop__close" type="button" aria-label="Close" data-close>
+      <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <div class="pop__art" aria-hidden="true">
+      <div class="pair">
+        <div class="g g--you"><b><small>$</small>100</b><i>For you</i></div>
+        <div class="g g--friend"><b><small>$</small>200</b><i>For a friend</i></div>
+      </div>
+    </div>
+    <div class="pop__body">
+      <span class="kicker">Refer a friend</span>
+      <h2 class="pop__title" id="pop-title">Love Your EVO ICL Vision?</h2>
+      <p class="pop__text" id="pop-text">Refer a friend and you could receive a <strong>$100&nbsp;gift&nbsp;card</strong>. Your friend could receive <strong>$200</strong>, too!</p>
+      <a class="btn btn--solid pop__btn" href="https://www.silkvision.net/special-offers">Learn More
+        <svg class="ico ico--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <p class="pop__fine">Offered and administered by STAAR&nbsp;Surgical. Terms&nbsp;apply.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Stand-ins for the existing widgets ========================== -->
+<div class="pot" aria-hidden="true"><span class="standin-note">existing</span><i>%</i><span><b>Pay over time</b><small>No hard credit checks · 0% APR options</small></span></div>
+<div class="bot-card" id="botCard" hidden><b>Chatbot (existing)</b>Stand-in for the chatbot’s card.</div>
+<button class="bot-launch" type="button" id="botLaunch" aria-label="Chatbot (stand-in)"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg></button>
+
+</body>
+</html>
