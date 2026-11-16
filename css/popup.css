@@ -176,8 +176,8 @@
 
 /* --------------------------------------------------------------------------
    Option B — the photograph. One hand passes a gift card to another, in
-   place of the drawn cards. A navy tag on the photo carries the two
-   amounts, so the offer still reads before the copy does. Adobe Stock
+   place of the drawn cards. The two amounts sit on the photo itself, so
+   the offer still reads before the copy does. Adobe Stock
    #311357399, cropped 2:1 on the card.
    -------------------------------------------------------------------------- */
 .pop__photo { display: none; }
@@ -200,18 +200,18 @@
 }
 .is-shown .pop__photo img { transform: none; }
 
+/* The amounts set straight on the photo, no box: navy type over the light
+   lower edge (the yellow chair and the pale rug), with a soft white halo
+   so it holds where the sleeve runs grey. */
 .pop__tag {
-  position: absolute; inset-inline-start: var(--s-4); inset-block-end: var(--s-4);
+  position: absolute; inset-inline-start: var(--s-4); inset-block-end: var(--s-3);
   display: inline-flex; align-items: baseline; gap: .5em;
-  padding: var(--s-2) var(--s-3);
-  border-radius: var(--r-md);
-  background: var(--fill-deep);
-  color: var(--on-dark-soft);
-  font-size: var(--t-xs); font-weight: 600; line-height: 1.2;
-  box-shadow: var(--shadow-md);
+  color: var(--ink-700);
+  font-size: var(--t-sm); font-weight: 600; line-height: 1.2;
+  text-shadow: 0 0 .6em rgb(255 255 255 / .9), 0 0 .2em rgb(255 255 255 / .9);
 }
-.pop__tag b { color: var(--white); font-size: 1.15em; font-weight: 800; }
-.pop__tag-sep { color: var(--cyan-300); }
+.pop__tag b { color: var(--heading); font-size: 1.3em; font-weight: 800; letter-spacing: var(--ls-tight); }
+.pop__tag-sep { color: var(--plum-600); font-weight: 800; }
 
 /* Over a bright photograph the close button needs its own ground. */
 .pop--photo .pop__close {
