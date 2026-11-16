@@ -51,20 +51,6 @@
     }
   });
 
-  // Mockup only: option A (drawn cards) or B (photo). The choice rides in
-  // the URL (?opt=photo) so a link opens on the option it was sent with.
-  const opts = [...document.querySelectorAll('[data-opt]')];
-  const choose = (opt) => {
-    const name = opts.some((b) => b.dataset.opt === opt) ? opt : 'cards';
-    for (const b of opts) b.setAttribute('aria-pressed', String(b.dataset.opt === name));
-    pop.classList.toggle('pop--photo', name === 'photo');
-    const url = new URL(location.href);
-    if (name === 'cards') url.searchParams.delete('opt'); else url.searchParams.set('opt', name);
-    history.replaceState(null, '', url);
-  };
-  for (const b of opts) b.addEventListener('click', () => { choose(b.dataset.opt); replay(); });
-  choose(new URLSearchParams(location.search).get('opt'));
-
   document.querySelector('[data-replay]').addEventListener('click', replay);
   document.getElementById('botLaunch').addEventListener('click', () => { bot.hidden = !bot.hidden; });
 

@@ -57,24 +57,6 @@ Before handing off, test it inside a copy of the live homepage at 320, 390,
   `--r-lg` corners, `--shadow-lg`. No gradients.
 - Phones: the card sits near the bottom, above the existing widgets.
 
-## Two options
-
-The mockup's top-right control switches between them, and the choice is
-kept in the URL so a link opens on it:
-
-- **A — Cards** (default): the two drawn gift cards on the navy panel.
-  https://imageworksc.github.io/silkvision-referral-popup/
-- **B — Photo**: a photograph of one hand passing a gift card to another,
-  with a navy tag carrying the two amounts.
-  https://imageworksc.github.io/silkvision-referral-popup/?opt=photo
-
-Only the art panel changes; copy, button, timing and behaviour are shared.
-
-The photo is Adobe Stock #311357399 ("Cropped view of man giving gift card
-to girlfriend"), licensed through the Adobe account. It is cropped 2:1 on
-the card and served as `images/gift-handover-960.webp` and
-`-1800.webp`. Upload both to Cloudinary before go-live.
-
 ## Behaviour (live rules)
 
 - Appears 1.5 s after load on desktop, 3 s on phones and tablets.
