@@ -20,8 +20,8 @@ index.html, css/staging.css     ← staging page only, never shipped
 ## Implementing it on silkvision.net
 
 1. **Host the assets.** Copy `css/sv-referral-popup.css`,
-   `js/sv-referral-popup.js` and, if needed, `css/fonts.css` + `fonts/`
-   into the theme (or the CDN), and point the three URLs in
+   `js/sv-referral-popup.js`, `css/sv-referral-popup-fonts.css` and
+   `fonts/` into the theme (or the CDN), and point the three URLs in
    `snippet.html` at them. Until then the snippet loads them from this
    GitHub Pages site, which works but should not stay in production.
 2. **Fonts.** The homepage already loads Poppins from Google Fonts, so
